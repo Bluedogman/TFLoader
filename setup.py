@@ -1,5 +1,3 @@
-import os
-import sys
 from pathlib import Path
 
 import promptlib  # I love you
@@ -26,9 +24,11 @@ def save_resource_paths(): #saving the path to the tf2 game folder in a file so 
 
     resource_path = resource_path / "resources"
     print(resource_path)
+    with open("config.cfg", "a") as file: #adding resource path to config
+        file.write("resource_path = ")
+        file.write(str(resource_path))
     tfpath = resource_path / "tfpath.TFL"
     disabledmodspath = resource_path / "disabledModsPath.TFL"
-    resource_path_file = resource_path / "resourcePath.TFL"
     resource_path.mkdir(exist_ok=True)
 
     if not disabledmodspath.exists():
@@ -36,7 +36,8 @@ def save_resource_paths(): #saving the path to the tf2 game folder in a file so 
         with open(disabledmodspath, "w") as f:
             f.write("")
 
-    tf2_path = input("What is the path to tf2? ")
+    #tf2_path = input("What is the path to tf2? ")
+    tf2_path = select_folder_promptlib("Where is the tf2 folder?(eg:\\steamapps\\common\\Team Fortress 2) ")
     with open(tfpath, "w") as f:
         f.write(tf2_path)
 
